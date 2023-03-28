@@ -2,6 +2,8 @@ import Box from '@mui/material/Box'
 import React, { useState } from 'react'
 import { Product } from '../../models/Product'
 import ProductItem from './components/ProductItem'
+import Button from '@mui/material/Button'
+import AddIcon from '@mui/icons-material/Add'
 
 const productInitialValue: Array<Product> = [
   {
@@ -61,14 +63,54 @@ const Products = () => {
   const [selectedProducts, setSelectedProducts] = useState<Array<Product>>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
 
+  const selectedItemHandler = (product: Product) => {
+    setSelectedProducts([...selectedProducts, product])
+    let tempTotal = parseInt(product.price)
+    selectedProducts.forEach((item) => {
+      tempTotal += parseInt(item.price)
+    })
+    setTotalPrice(tempTotal)
+  }
+
+  const removeItemHandler = (product: Product) => {
+    const temp = selectedProducts.filter((item) => item.id != product.id)
+    setSelectedProducts([...temp])
+    let tempTotal = parseInt(product.price)
+    setTotalPrice(totalPrice - tempTotal)
+  }
+
   return (
     <div>
       <h2>Product List</h2>
-      <p>Selected Products: {}</p>
-      <button>add</button>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, my: 1 }}>
+      <p>
+        Selected Products: {selectedProducts.length} Total Price :{totalPrice}
+      </p>
+      <Button variant='contained' sx={{ mb: 2 }} startIcon={<AddIcon />}>
+        New Product
+      </Button>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 2,
+          my: 1,
+          boxShadow: 3,
+          p: 2,
+          borderRadius: 2,
+        }}
+      >
         {products.map((item, index) => {
-          return <ProductItem key={index} product={item} />
+          return (
+            <ProductItem
+              key={index}
+              product={item}
+              selectedItem={selectedItemHandler}
+              removeItem={removeItemHandler}
+              selected={
+                selectedProducts.findIndex((q) => q.id == item.id) != -1
+              }
+            />
+          )
         })}
       </Box>
     </div>

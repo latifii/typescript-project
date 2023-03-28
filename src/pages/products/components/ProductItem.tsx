@@ -1,21 +1,35 @@
 import React from 'react'
 import { Product } from '../../../models/Product'
 
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import IconButton from '@mui/material/IconButton'
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
+import EditIcon from '@mui/icons-material/Edit'
+import { Stack } from '@mui/material'
 
 interface IProductProps {
   product: Product
+  selectedItem: any
+  selected: any
+  removeItem: any
 }
 const ProductItem = (props: IProductProps) => {
-  const { product } = props
+  const { product, selectedItem, selected, removeItem } = props
 
   return (
-    <Card sx={{ minWidth: 275, gap: 2 }}>
+    <Card
+      sx={{
+        minWidth: 275,
+        gap: 2,
+        boxShadow: 0,
+        border: 1,
+        borderColor: 'grey.300',
+      }}
+    >
       <CardContent>
         <Typography variant='h5' component='div'>
           Title: {product.title}
@@ -31,7 +45,29 @@ const ProductItem = (props: IProductProps) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size='small'>Learn More</Button>
+        <Stack direction='row' alignItems='center' spacing={1}>
+          {selected ? (
+            <IconButton
+              size='small'
+              color='primary'
+              onClick={() => removeItem(product)}
+            >
+              <RemoveIcon fontSize='small' />
+            </IconButton>
+          ) : (
+            <IconButton
+              size='small'
+              color='primary'
+              onClick={() => selectedItem(product)}
+            >
+              <AddIcon fontSize='small' />
+            </IconButton>
+          )}
+
+          <IconButton size='small' color='secondary'>
+            <EditIcon fontSize='small' />
+          </IconButton>
+        </Stack>
       </CardActions>
     </Card>
   )
