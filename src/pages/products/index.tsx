@@ -4,6 +4,7 @@ import { Product } from '../../models/Product'
 import ProductItem from './components/ProductItem'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
+import ProductModal from './components/ProductModal'
 
 const productInitialValue: Array<Product> = [
   {
@@ -62,6 +63,10 @@ const Products = () => {
   const [products, setProducts] = useState<Array<Product>>(productInitialValue)
   const [selectedProducts, setSelectedProducts] = useState<Array<Product>>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
+  const [open, setOpen] = useState<boolean>(false)
+
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   const selectedItemHandler = (product: Product) => {
     setSelectedProducts([...selectedProducts, product])
@@ -85,9 +90,18 @@ const Products = () => {
       <p>
         Selected Products: {selectedProducts.length} Total Price :{totalPrice}
       </p>
-      <Button variant='contained' sx={{ mb: 2 }} startIcon={<AddIcon />}>
+      <Button
+        variant='contained'
+        sx={{ mb: 2 }}
+        startIcon={<AddIcon />}
+        onClick={handleOpen}
+      >
         New Product
       </Button>
+      {open ? (
+        <ProductModal openModal={open} handleClose={handleClose} />
+      ) : null}
+
       <Box
         sx={{
           display: 'flex',
