@@ -11,7 +11,7 @@ const productInitialValue: Array<Product> = [
     id: 1,
     title: 'Iran 207',
     price: '750',
-    colors: ['white', 'red', 'block'],
+    colors: ['red', 'black', 'green'],
     editMode: false,
   },
   {
@@ -68,6 +68,18 @@ const Products = () => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
+  const handleAddProduct = (title: string, price: string) => {
+    console.log(title, price)
+    const newProduct: Product = {
+      id: 4775,
+      title: title,
+      price: price,
+      colors: [],
+      editMode: false,
+    }
+    setProducts([...products, newProduct])
+  }
+
   const selectedItemHandler = (product: Product) => {
     setSelectedProducts([...selectedProducts, product])
     let tempTotal = parseInt(product.price)
@@ -99,7 +111,11 @@ const Products = () => {
         New Product
       </Button>
       {open ? (
-        <ProductModal openModal={open} handleClose={handleClose} />
+        <ProductModal
+          openModal={open}
+          handleClose={handleClose}
+          addProduct={handleAddProduct}
+        />
       ) : null}
 
       <Box

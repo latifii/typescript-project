@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import EditIcon from '@mui/icons-material/Edit'
-import { Stack } from '@mui/material'
+import { Box, Stack } from '@mui/material'
 
 interface IProductProps {
   product: Product
@@ -31,18 +31,28 @@ const ProductItem = (props: IProductProps) => {
       }}
     >
       <CardContent>
-        <Typography variant='h5' component='div'>
-          Title: {product.title}
-        </Typography>
-        <Typography variant='h6' component='div' color='text.secondary'>
-          Price: {product.price}
-        </Typography>
-        <Typography>
+        <Typography>Title: {product.title}</Typography>
+        <Typography color='text.secondary'>Price: {product.price}</Typography>
+        <Box sx={{ display: 'flex', gap: 1 }}>
           Colors:{' '}
-          {product.colors.map((item, index) => {
-            return <span key={index}>{item}</span>
-          })}
-        </Typography>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            {product.colors.map((item, index) => {
+              return (
+                <span
+                  key={index}
+                  style={{
+                    background: item,
+                    width: '25px',
+                    height: '25px',
+                    border: 1,
+                    borderColor: 'grey.300',
+                    borderRadius: 99,
+                  }}
+                ></span>
+              )
+            })}
+          </Box>
+        </Box>
       </CardContent>
       <CardActions>
         <Stack direction='row' alignItems='center' spacing={1}>

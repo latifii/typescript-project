@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useRef, useState } from 'react'
 import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
@@ -26,13 +26,18 @@ const style = {
 interface IModalProps {
   openModal: boolean
   handleClose: any
+  addProduct: any
 }
 
 const colors: Array<string> = ['blue', 'red', 'black', 'yellow']
 
 const ProductModal = (props: IModalProps) => {
-  const { openModal, handleClose } = props
-
+  const { openModal, handleClose, addProduct } = props
+  const [title, setTitle] = useState<string>('')
+  const [price, setPrice] = useState<string>('')
+  const save = () => {
+    console.log(title, price)
+  }
   return (
     <div>
       <Modal
@@ -70,14 +75,20 @@ const ProductModal = (props: IModalProps) => {
                 label='Title'
                 variant='outlined'
                 size='small'
+                type='text'
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 fullWidth
               />
+
               <TextField
                 id='price-basic'
                 label='price'
                 variant='outlined'
                 size='small'
                 type='number'
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
                 fullWidth
               />
               <TextField
@@ -97,10 +108,16 @@ const ProductModal = (props: IModalProps) => {
               </TextField>
             </Box>
             <Stack direction='row' spacing={2}>
-              <Button variant='contained' startIcon={<SaveIcon />}>
+              <Button
+                variant='contained'
+                startIcon={<SaveIcon />}
+                onClick={() => addProduct(title, price)}
+              >
                 Save
               </Button>
-              <Button variant='outlined'>Cancel</Button>
+              <Button variant='outlined' onClick={handleClose}>
+                Cancel
+              </Button>
             </Stack>
           </Box>
         </Fade>
