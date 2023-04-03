@@ -5,7 +5,8 @@ import ProductItem from './components/ProductItem'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import ProductModal from './components/ProductModal'
-
+// import { v4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 const productInitialValue: Array<Product> = [
   {
     id: 1,
@@ -69,9 +70,9 @@ const Products = () => {
   const handleClose = () => setOpen(false)
 
   const handleAddProduct = (title: string, price: string) => {
-    console.log(title, price)
+    const uid = uuidv4()
     const newProduct: Product = {
-      id: 4775,
+      id: uid,
       title: title,
       price: price,
       colors: [],
