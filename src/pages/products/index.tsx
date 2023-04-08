@@ -61,6 +61,7 @@ const productInitialValue: Array<Product> = [
 
 const Products = () => {
   // State Products
+
   const [products, setProducts] = useState<Array<Product>>(productInitialValue)
   const [selectedProducts, setSelectedProducts] = useState<Array<Product>>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
